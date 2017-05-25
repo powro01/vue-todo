@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Vue - ToDo</title>
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+    <body>
+        <div class="container" id="vue-todo">
+            <div class="form-control">
+                <div class="clearfix">
+                    <input type="text" placeholder="Dodaj zadanie" v-model="content" v-on:keypress.enter="addTask">
+                    <button class="fa fa-plus-circle" v-on:click="addTask"></button>
+                </div>
+                <p class="view">{{ content }}</p>
+            </div>
+            <div class="tasks-list">
+                <div class="column" v-show="tasksLength">
+                    <h2>Wszystkie zadania</h2>
+                    <ul class="all-tasks">
+                        <li v-for="(task, index) in tasks">
+                            <span>{{task.content}}</span>
+                            <button v-on:click="task.complete = !task.complete" class="fa fa-check"></button>
+                            <button v-on:click="deleteTask(index)" class="fa fa-trash-o"></button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="column completed" v-show="completedTasks">
+                    <h2>Zakończone zadania</h2>
+                    <ul class="all-tasks">
+                        <li v-for="task in completedTasks">
+                            <span>{{task.content}}</span>
+                            <button v-on:click="task.complete = false" class="fa fa-undo"></button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="column uncompleted" v-show="uncompletedTasks">
+                    <h2>Niezakończone zadania</h2>
+                    <ul class="all-tasks">
+                        <li v-for="task in uncompletedTasks">
+                            <span>{{task.content}}</span>
+                            <button v-on:click="task.complete = true" class="fa fa-check"></button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <button v-on:click="saveTasksList">Save</button>
+            <button v-on:click="getTasks">Return</button>
+        </div>
+        <script src="https://unpkg.com/vue"></script>
+        <script src="js/app.js"></script>        
+    </body>
+</html>
